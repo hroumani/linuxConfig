@@ -1,0 +1,25 @@
+# Don't have screens appear in "users" list
+deflogin off
+
+# 1000 lines of scrollback buffer for all windows
+defscrollback 1000
+
+# Figure out name of running program using the prompt and special escapes
+shelltitle "> |bash"
+
+defmonitor on
+
+# Don't wait if multi-escape key sequence is used. Useful for making C-a C-[ and the Escape key more responsive.
+maptimeout 0
+
+# Show an empty caption stripe to have separation from hard status line
+caption always ""
+
+# Hard status always displayed at bottom of windows
+hardstatus alwayslastline
+
+# [hostname]      ...windows...      [time]
+hardstatus string "[%H] %L=%=%-Lw%50L>%{= wk}%n%f %t%{-}%+Lw %=%-11= [%C %A]"
+
+# Disable BELL
+vbell off
