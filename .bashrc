@@ -39,10 +39,6 @@ else
    DoInteractive=1
 fi
 
-if [ ${DoInteractive?} ] ; then
-if [ -z "${KSHRC_READ}" ] ; then
-   KSHRC_READ=1
-
 # Can generate POD docs for this file by exectuting:
 #../bin/shdoc file=kshrci
 
@@ -145,7 +141,4 @@ alias pp='ps -f -u $USER --forest'
 alias results='cat ""`find . -name \*.res` > ./all.out'
 alias ddr='cd `goToDump.pl`'
 
-case "$TERM" in
-   screen*) PROMPT_COMMAND='echo -ne "\033k\033\0134"'
-esac
 export PATH=$PATH:$HOME/.vim_backup/myTools/
