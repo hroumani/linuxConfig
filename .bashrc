@@ -142,3 +142,4 @@ alias results='cat ""`find . -name \*.res` > ./all.out'
 alias ddr='cd `goToDump.pl`'
 
 export PATH=$PATH:$HOME/.vim_backup/myTools/
+export PATH=$PATH:$HOME/linuxConfig/

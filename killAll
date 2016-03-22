@@ -1,29 +1,43 @@
 #!/bin/bash
+# Author: Hamdi Roumani
+# Description: Similar to pkill / killall but will prompt before killing any
+#              process.
+# -----------------------------------------------------------------------------
 
 if [ "$#" -ne 1 ]; then
     echo "Usage: killAll <process to kill name>"
     exit
 fi
 
-out=`ps -elf | grep -i "$1 " | grep -v grep`
+# Capture all matching processes less grep and ps it self.
+out=`ps -elf | grep -i "$1 " | grep -v "grep " | grep -v "ps "`
+
+if [ -z "$out" ]; then
+   exit;
+fi
 
 while read -r line
 do
+   # Capture process PID and description
+   pname=`echo $line | awk '{print substr($0, index($0,$15))}'`
+   pid=`echo $line | awk '{print $4}'`
 
-while true; do
-  # (1) prompt user, and read command line argument
-  pname=`echo $line | awk '{print substr($0, index($0,$15))}'`
-  pid=`echo $line | awk '{print $4}'`
-  read -u 3 -p "Kill this process (\"$pname\", $pid) ? " answer
+   # Prompt for action and act accordingly
+   # Note: The decision to look for a n/N instead of treating any input other
+   # than y/Y as a "do not kill" had to do with screen notifications, often
+   # when a process is killed (e.g. SSH) a bell is triggered by screen to
+   # notify and often enter is pressed to continue which would be interpreted
+   # as a "do not kill" decision.
+   while true; do
+      read -u 24 -p "Kill this process (\"$pname\", $pid) ? " answer
 
-  # (2) handle the input we were given
-  case $answer in
-   ([yY]* ) kill $pid
-            break;;
-   ([nN]* ) break;;
-   (* ) echo "Please use Y or N.";;
-  esac
-done
+      case $answer in
+         ([yY]* ) kill $pid
+                  break;;
+         ([nN]* ) break;;
+         (* )     echo "Please use Y or N.";;
+      esac
+   done
 
-    
-done 3<&0  <<<"$out"
+# Need to redirect std out FD so we can use it to prompt within the while loop    
+done 24<&0  <<<"$out"
