@@ -1,0 +1,5 @@
+1) sudo curl -O https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz
+2) whereis go
+3) Delete all of the above
+4)  tar -C /usr/local -xzf go*
+
