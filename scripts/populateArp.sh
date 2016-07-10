@@ -6,3 +6,5 @@ do
         ping $s -c 1 -w 1
 done
 
+# Or try arp-scan  10.41.33.64/26 which should do the same
+
