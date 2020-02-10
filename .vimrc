@@ -28,6 +28,9 @@ set autochdir
 set expandtab
 set shiftwidth=3
 set tabstop=3
+set smartindent
+set smarttab
+set shiftwidth=3
 
 "set relativenumber
 " set number
@@ -104,8 +107,8 @@ set shortmess+=A
 set dir=~/tmp/vimswap
 
 " Bind keys to enforce the clang-format we use with the project
-map <C-K> :ClangFormat<cr>
-let g:clang_format#auto_format = 1
+map <C-K> :ClangFormat<CR>
+" let g:clang_format#auto_format = 1
 
 "
 "
@@ -136,3 +139,43 @@ let g:pymode_python='python'
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
+
+" Highlight whitespace
+:highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+
+:match ExtraWhitespace /\s\+\%#\@<!$/
+
+" -----------------------------------------------------------------------------
+"  "  Go to the matching entry/exit point in a db2trc flw file
+"  "
+"  -----------------------------------------------------------------------------
+let b:match_words = '\(\k\+\) entry:\1 exit'
+
+set clipboard=unnamedplus
+
+" Vim pane remaps (l = left / h = right)
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
+
+highlight RedundantSpaces ctermbg=blue guibg=blue
+match RedundantSpaces /\s\+$\| \+\ze\t\|\^\t/
+
+" -----------------------------------------------------------------------------
+"  Have VIM highlight tab characters and trailing whitespace, but turn it
+"  off by default.
+" -----------------------------------------------------------------------------
+set listchars=tab:>-,trail:<
+set nolist
+
+" -----------------------------------------------------------------------------
+"  Toggle various options on and off and show the current value
+"   - <F9>  = Paste mode
+"   - <F10> = Line numbers
+"   - <F11> = Highlight tabs and trailing blanks
+"   - <F12> = Word wrapping
+" -----------------------------------------------------------------------------
+set invlist   list
+map <F11> :set invlist   list?<CR>
+
+autocmd Filetype perl setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+
